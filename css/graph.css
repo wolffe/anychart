@@ -1,5 +1,4 @@
 dl {
-	font-family: 'Open Sans Condensed';
 	margin: 0 0 0 0 !important;
 	padding: 0 0 9px 0; 
 	width: 100%; 
@@ -7,17 +6,20 @@ dl {
 	background: #ffffff url(../images/bar.gif) bottom left repeat-x;
 }
 dt {
-	text-align: center; 
-	font-size: 1.2em; 
-	border-bottom: 3px solid #fff;
+	border-bottom: 3px solid #FFFFFF;
+    border-top: 1px dotted #CFCFCF;
+    color: #7F1E23;
+    font-size: 33px;
+    margin-bottom: 20px;
+    margin-top: 0;
+    padding-top: 40px;
+    text-align: center;
 }
 dd {
-	margin: 0 0 0 0 !important;
+	margin: 0 0 1px 0 !important;
 	display: block; 
 	width: 100%; 
-	height: 2em; 
-	/* background-color: #E10707; */
-	border-bottom: 1px solid #ffffff;
+	height: 1.8em;
 	box-shadow: inset 0 2em 2em rgba(0, 0, 0, 0.3);
 }
 dd b {
@@ -25,13 +27,13 @@ dd b {
 	display: block; 
 	margin-left: auto; 
 	background: #D7D6D6 url(../images/noise.png) repeat;
-	height: 2em; 
-	line-height: 2em;
+	height: 1.8em;
+	line-height: 1.8em;
 	text-align: right;
-	font-weight: 700;
+	font-weight: normal;
 }
 dd b:hover {
-	margin-right: 20px;
+	margin-right: 10px;
 }
 dd b {
 	-webkit-transition: all 0.3s ease;

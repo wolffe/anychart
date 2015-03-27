@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: AnyChart
-Version: 1.0
+Version: 1.1
 Plugin URI: http://getbutterfly.com/wordpress-plugins/anychart/
 Description: Simple bar chart custom post generator.
 Author: Ciprian Popescu
@@ -25,46 +25,39 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 define('ANYCHART_PLUGIN_URL', WP_PLUGIN_URL . '/' . dirname(plugin_basename(__FILE__)));
 define('ANYCHART_PLUGIN_PATH', WP_PLUGIN_DIR . '/' . dirname(plugin_basename(__FILE__)));
-define('ANYCHART_VERSION', '1.0');
+define('ANYCHART_VERSION', '1.1');
 
 // plugin localization
 $plugin_dir = basename(dirname(__FILE__)); 
 load_plugin_textdomain('anychart', false, $plugin_dir . '/languages'); 
 
-include_once('includes/updater.php');
+require_once('includes/updater.php');
 if(is_admin()) {
 	$config = array(
 		'slug' => plugin_basename(__FILE__), // this is the slug of your plugin
-		'proper_folder_name' => 'plugin-name', // this is the name of the folder your plugin lives in
-		'api_url' => 'https://api.github.com/repos/username/repository-name', // the github API url of your github repo
-		'raw_url' => 'https://raw.github.com/username/repository-name/master', // the github raw url of your github repo
-		'github_url' => 'https://github.com/username/repository-name', // the github url of your github repo
-		'zip_url' => 'https://github.com/username/repository-name/zipball/master', // the zip url of the github repo
-		'sslverify' => true // wether WP should check the validity of the SSL cert when getting an update, see https://github.com/jkudish/WordPress-GitHub-Plugin-Updater/issues/2 and https://github.com/jkudish/WordPress-GitHub-Plugin-Updater/issues/4 for details
-		'requires' => '3.0', // which version of WordPress does your plugin require?
-		'tested' => '3.3', // which version of WordPress is your plugin tested up to?
+		'proper_folder_name' => 'anychart', // this is the name of the folder your plugin lives in
+		'api_url' => 'https://api.github.com/repos/wolffe/anychart', // the github API url of your github repo
+		'raw_url' => 'https://raw.github.com/wolffe/anychart/master', // the github raw url of your github repo
+		'github_url' => 'https://github.com/wolffe/anychart', // the github url of your github repo
+		'zip_url' => 'https://github.com/wolffe/anychart/zipball/master', // the zip url of the github repo
+		'sslverify' => true, // wether WP should check the validity of the SSL cert when getting an update, see https://github.com/jkudish/WordPress-GitHub-Plugin-Updater/issues/2 and https://github.com/jkudish/WordPress-GitHub-Plugin-Updater/issues/4 for details
+		'requires' => '4.0', // which version of WordPress does your plugin require?
+		'tested' => '4.1.1', // which version of WordPress is your plugin tested up to?
 		'readme' => 'README.MD' // which file to use as the readme for the version number
 	);
-	new WPGitHubUpdater($config);
+	new WP_GitHub_Updater($config);
 }
 
 // settings menu
 function anychart_wp_menu() {
-	add_menu_page('AnyChart', 'AnyChart', 'manage_options', __FILE__, 'anychart_dashboard_page', ANYCHART_PLUGIN_URL . '/images/icon-16.png');
+	add_submenu_page('edit.php?post_type=anychart', 'AnyChart Settings', 'AnyChart Settings', 'manage_options', 'anychart', 'anychart_dashboard_page');
 }
 
 include(ANYCHART_PLUGIN_PATH . '/includes/registration.php');
 
 function anychart_styles() {
-	wp_enqueue_style('anychart-styles', ANYCHART_PLUGIN_URL . '/css/style.css');	
+	wp_enqueue_style('anychart-styles', ANYCHART_PLUGIN_URL . '/css/graph.css');	
 }
-
-function anychart_scripts() {
-	wp_enqueue_script('jquery');
-
-	wp_enqueue_script( 'functions', ANYCHART_PLUGIN_URL . '/js/functions.js' );
-}
-add_action('wp_enqueue_scripts', 'anychart_scripts');
 
 // Roo activation
 register_activation_hook(__FILE__, 'anychart_init');
@@ -80,6 +73,22 @@ add_action('wp_print_styles', 'anychart_styles');
 // Roo shortcodes
 add_shortcode('anychart', 'anychart_main');
 
+function anychart_dashboard_page() {
+	?>
+	<div class="wrap">
+		<h2>AnyCharts</h2>
+		<div id="poststuff" class="ui-sortable meta-box-sortables">
+			<div class="postbox">
+				<h3>At a Glance</h3>
+				<div class="inside">
+					<p>This is just a placeholder page. In order to add/edit/remove chart items, find the <b>Chart Items</b> menu item to the left.</p>
+				</div>
+			</div>
+		</div>
+	</div>
+	<?php
+}
+
 // Main directory function
 // Displays link submission form and category table
 function anychart_main($atts) {
@@ -94,15 +103,12 @@ function anychart_main($atts) {
 		$display = '';
 
 		$display .= '
-        <link rel="stylesheet" type="text/css" href="' . ANYCHART_PLUGIN_URL . '/css/graph.css" />
-		<link href="http://fonts.googleapis.com/css?family=Open+Sans+Condensed:700,300" rel="stylesheet" type="text/css">';
-
-		$display .= '
+		<h2>' . ucwords($type) . ' (%)<br><small>' . $caption . '</small></h2>
 		<section class="main">
-			<dl>
-				<dt>' . ucwords($type) . ' (%) - ' . $caption . '</dt>';
-
+			<dl>';
 				query_posts(array(
+					'orderby' => 'date',
+					'order' => 'ASC',
 					'post_status' => 'publish',
 					'post_type' => array('anychart'),
 					'posts_per_page' => -1,
@@ -112,12 +118,12 @@ function anychart_main($atts) {
 					$value = get_the_content() * 10;
 					$color = sprintf("#%06x", rand(0, 16777215));
 					$display .= '
-					<dd class="p' . $value . '"><b>' . get_the_title() . ' (' . get_the_content() . '%)&nbsp;</b></dd>';
+					<dd class="p' . $value . '"><b>' . get_the_title() . '<!-- <small>(' . get_the_content() . '%)</small>-->&nbsp;</b></dd>';
 					$display .= '<style type="text/css">dd.p' . $value . ' b { width: ' . (100 - get_the_content()) . '%; } dd.p' . $value . ' { background-color: ' . $color . '; }</style>';
 				endwhile;
 				endif;
 		$display .= '</dl>
-		</section>';
+		</section><br><br>';
 
 		wp_reset_query();
 

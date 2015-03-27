@@ -27,7 +27,7 @@ function create_anychart_type() {
 			'menu_position' => 18,
 			'supports' 		=> array('title', 'editor'),
 			'taxonomies' 	=> array(''),
-			'menu_icon' 	=> ANYCHART_PLUGIN_URL . '/images/icon-16.png',
+			'menu_icon' 	=> 'dashicons-chart-bar',
 			'has_archive' 	=> true,
 			'rewrite' 		=> array('slug' => 'anychart'),
 		)
