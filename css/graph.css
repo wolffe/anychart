@@ -1,0 +1,41 @@
+dl {
+	font-family: 'Open Sans Condensed';
+	margin: 0 0 0 0 !important;
+	padding: 0 0 9px 0; 
+	width: 100%; 
+	height: auto; 
+	background: #ffffff url(../images/bar.gif) bottom left repeat-x;
+}
+dt {
+	text-align: center; 
+	font-size: 1.2em; 
+	border-bottom: 3px solid #fff;
+}
+dd {
+	margin: 0 0 0 0 !important;
+	display: block; 
+	width: 100%; 
+	height: 2em; 
+	/* background-color: #E10707; */
+	border-bottom: 1px solid #ffffff;
+	box-shadow: inset 0 2em 2em rgba(0, 0, 0, 0.3);
+}
+dd b {
+	float: right;
+	display: block; 
+	margin-left: auto; 
+	background: #D7D6D6 url(../images/noise.png) repeat;
+	height: 2em; 
+	line-height: 2em;
+	text-align: right;
+	font-weight: 700;
+}
+dd b:hover {
+	margin-right: 20px;
+}
+dd b {
+	-webkit-transition: all 0.3s ease;
+	-moz-transition: all 0.3s ease;
+	-o-transition: all 0.3s ease;
+	transition: all 0.3s ease;
+}
