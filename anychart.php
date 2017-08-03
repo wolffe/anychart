@@ -6,6 +6,7 @@ Plugin URI: http://getbutterfly.com/wordpress-plugins/anychart/
 Description: Simple bar chart custom post generator.
 Author: Ciprian Popescu
 Author URI: http://getbutterfly.com/
+Update URL: https://github.com/wolffe/anychart/
 
 Copyright 2013  Ciprian Popescu  (email : getbutterfly@gmail.com)
 
