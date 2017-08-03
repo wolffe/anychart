@@ -1,14 +1,15 @@
 <?php
 /*
 Plugin Name: AnyChart
-Version: 1.1
-Plugin URI: http://getbutterfly.com/wordpress-plugins/anychart/
+Plugin URI: https://getbutterfly.com
 Description: Simple bar chart custom post generator.
+Version: 1.3
 Author: Ciprian Popescu
-Author URI: http://getbutterfly.com/
+Author URI: https://getbutterfly.com
 Update URL: https://github.com/wolffe/anychart/
+Text Domain: anychart
 
-Copyright 2013  Ciprian Popescu  (email : getbutterfly@gmail.com)
+Copyright 2013-2017 Ciprian Popescu (email: getbutterfly@gmail.com)
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -21,12 +22,12 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
-along with this program.  If not, see <http://www.gnu.org/licenses/>.
+along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
 define('ANYCHART_PLUGIN_URL', WP_PLUGIN_URL . '/' . dirname(plugin_basename(__FILE__)));
 define('ANYCHART_PLUGIN_PATH', WP_PLUGIN_DIR . '/' . dirname(plugin_basename(__FILE__)));
-define('ANYCHART_VERSION', '1.1');
+define('ANYCHART_VERSION', '1.3');
 
 // plugin localization
 $plugin_dir = basename(dirname(__FILE__)); 
@@ -135,4 +136,3 @@ function anychart_main($atts) {
 		return $display;
 	}
 }
-?>
