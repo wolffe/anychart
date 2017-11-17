@@ -3,7 +3,7 @@
 Plugin Name: AnyChart
 Plugin URI: https://getbutterfly.com
 Description: Simple bar chart custom post generator.
-Version: 1.3
+Version: 1.3.1
 Author: Ciprian Popescu
 Author URI: https://getbutterfly.com
 Update URL: https://github.com/wolffe/anychart/
@@ -27,14 +27,14 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 define('ANYCHART_PLUGIN_URL', WP_PLUGIN_URL . '/' . dirname(plugin_basename(__FILE__)));
 define('ANYCHART_PLUGIN_PATH', WP_PLUGIN_DIR . '/' . dirname(plugin_basename(__FILE__)));
-define('ANYCHART_VERSION', '1.3');
+define('ANYCHART_VERSION', '1.3.1');
 
 // plugin localization
 $plugin_dir = basename(dirname(__FILE__)); 
 load_plugin_textdomain('anychart', false, $plugin_dir . '/languages'); 
 
-require_once('includes/updater.php');
-if(is_admin()) {
+require_once 'includes/updater.php';
+if (is_admin()) {
 	$config = array(
 		'slug' => plugin_basename(__FILE__), // this is the slug of your plugin
 		'proper_folder_name' => 'anychart', // this is the name of the folder your plugin lives in
@@ -43,8 +43,8 @@ if(is_admin()) {
 		'github_url' => 'https://github.com/wolffe/anychart', // the github url of your github repo
 		'zip_url' => 'https://github.com/wolffe/anychart/zipball/master', // the zip url of the github repo
 		'sslverify' => true, // wether WP should check the validity of the SSL cert when getting an update, see https://github.com/jkudish/WordPress-GitHub-Plugin-Updater/issues/2 and https://github.com/jkudish/WordPress-GitHub-Plugin-Updater/issues/4 for details
-		'requires' => '4.0', // which version of WordPress does your plugin require?
-		'tested' => '4.1.1', // which version of WordPress is your plugin tested up to?
+		'requires' => '4.6', // which version of WordPress does your plugin require?
+		'tested' => '4.9', // which version of WordPress is your plugin tested up to?
 		'readme' => 'README.MD' // which file to use as the readme for the version number
 	);
 	new WP_GitHub_Updater($config);
